@@ -64,3 +64,15 @@ var app7 = new Vue({
         ]
     }
 })
+
+var app8 = new Vue({
+    el: '#example',
+    data: {
+        message: 'Привет'
+    },
+    computed: {
+        reversedMessage: function() {
+            return this.message.split('').reverse().join('')
+        }
+    }
+})
