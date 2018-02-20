@@ -76,3 +76,58 @@ var app8 = new Vue({
         }
     }
 })
+
+var demo = new Vue({
+    el: '#demo',
+    data: {
+        firstName: 'Foo',
+        lastName: 'Bar'
+    },
+    computed: {
+        fullName: {
+            get: function() {
+                return this.firstName + ' ' + this.lastName
+            },
+            set: function(newValue) {
+                var names = newValue.split(' ')
+                this.firstName = names[0]
+                this.lastName = names[names.length - 1]
+            }
+            
+        }
+    }
+})
+
+var watchExampleVM = new Vue({
+    el: '#watch-example',
+    data: {
+        question: '',
+        answer: 'Пока вы не зададите вопрос, я не могу ответить!'
+    },
+    watch: {
+        question: function(newQuestion, oldQuestion) {
+            this.answer = 'Ожидаю, когда вы зкаончите печатать...'
+            this.getAnswer()
+        }
+    },
+    methods: {
+        getAnswer: _.debounce(
+            function() {
+                if (this.question.indexOf('?') === -1) {
+                    this.answer = 'Вопросы обычно заканчиваются вопросительным знаком'
+                    return
+                }
+                this.answer = 'Думаю...'
+                var vm = this
+                axios.get('https://yesno.wtf/api')
+                    .then(function(response) {
+                        vm.answer = _.capitalize(response.data.answer)
+                    })
+                    .catch(function(error){
+                        vm.answer = 'Ошибка! Не могу связаться с API. ' + error
+                    })
+            },
+            500
+        )
+    }
+})

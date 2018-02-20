@@ -47,7 +47,16 @@
     <p>Сообщение задом наперед: "{{ reversedMessage }}"</p>
 </div>
 <div id="demo">{{ fullName }}</div>
+<div id="watch-example">
+    <p>
+        Задайте вопрос, на который можно ответить "да" или "нет":
+        <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
